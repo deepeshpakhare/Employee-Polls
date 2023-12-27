@@ -1,0 +1,39 @@
+const users = [
+    {
+        id:1,
+        username:"james",
+        password:"james123",
+        avatar:"james.jpg"
+    },
+    {
+        id:2,
+        username:"mohammed",
+        password:"prophet123",
+        avatar:"mohammed.jpg"
+    },
+    {
+        id:3,
+        username:"mohammed",
+        password:"prophet123",
+        avatar:"mohammed.jpg"
+    },
+    {
+        id:4,
+        username:"natali",
+        password:"natali123",
+        avatar:"natali.jpg"
+    },
+    {
+        id:5,
+        username:"prabhjyot",
+        password:"prabhjyot123",
+        avatar:"prabhjyot.jpg"
+    },
+    {
+        id:6,
+        username:"lolita",
+        password:"lolita123",
+        avatar:"lolita.jpg"
+    },
+
+]
