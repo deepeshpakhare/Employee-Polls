@@ -1,39 +1,42 @@
-const users = [
+import { nanoid } from "@reduxjs/toolkit"
+
+
+export const users = [
     {
-        id:1,
-        username:"james",
-        password:"james123",
-        avatar:"james.jpg"
+        id: nanoid(),
+        username: "james",
+        password: "james123",
+        avatar: "james.jpg",
+        selected: false,
     },
     {
-        id:2,
-        username:"mohammed",
-        password:"prophet123",
-        avatar:"mohammed.jpg"
+        id: nanoid(),
+        username: "mohammed",
+        password: "prophet123",
+        avatar: "mohammed.jpg",
+        selected: false,
     },
     {
-        id:3,
-        username:"mohammed",
-        password:"prophet123",
-        avatar:"mohammed.jpg"
+        id: nanoid(),
+        username: "natali",
+        password: "natali123",
+        avatar: "natali.jpg",
+        selected: false,
+
     },
     {
-        id:4,
-        username:"natali",
-        password:"natali123",
-        avatar:"natali.jpg"
-    },
-    {
-        id:5,
-        username:"prabhjyot",
+        id: nanoid(),
+        username: "prabhjyot",
         password:"prabhjyot123",
-        avatar:"prabhjyot.jpg"
+        avatar:"prabhjyot.jpg",
+        selected: false,
     },
     {
-        id:6,
+        id: nanoid(),
         username:"lolita",
         password:"lolita123",
-        avatar:"lolita.jpg"
+        avatar:"lolita.jpg",
+        selected: false,
     },
 
 ]
