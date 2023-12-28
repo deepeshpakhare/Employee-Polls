@@ -17,12 +17,17 @@ export const authSlice = createSlice(
                 state.authDetails.map((user) => user.username === action.payload.username &&
                 user.password === action.payload.password ? Object.assign(user,{loggedIn:true}): Object.assign(user,{loggedIn:false}));
                 const activeUser = state.authDetails.filter((user) => user.loggedIn)[0];
+                activeUser.password = "";
                 localStorage.setItem("activeUser",JSON.stringify(activeUser));
             },
-        }
+            logOutSuccess: (state, action) => {
+                localStorage.removeItem("activeUser");
+                Object.assign(state.authDetails.filter((user) => user.loggedIn && user.selected)[0],{selected:false},{loggedIn:false});
+            }
+        }    
     }
 )
 
-export const { selectUser, logInSuccess } = authSlice.actions;
+export const { selectUser, logInSuccess, logOutSuccess } = authSlice.actions;
 
 export default authSlice.reducer
