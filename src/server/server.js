@@ -8,6 +8,7 @@ export const users = [
         password: "james123",
         avatar: "james.jpg",
         selected: false,
+        loggedIn: false,
     },
     {
         id: nanoid(),
@@ -15,6 +16,7 @@ export const users = [
         password: "prophet123",
         avatar: "mohammed.jpg",
         selected: false,
+        loggedIn: false,
     },
     {
         id: nanoid(),
@@ -22,6 +24,7 @@ export const users = [
         password: "natali123",
         avatar: "natali.jpg",
         selected: false,
+        loggedIn: false,
 
     },
     {
@@ -30,6 +33,7 @@ export const users = [
         password:"prabhjyot123",
         avatar:"prabhjyot.jpg",
         selected: false,
+        loggedIn: false,
     },
     {
         id: nanoid(),
@@ -37,6 +41,7 @@ export const users = [
         password:"lolita123",
         avatar:"lolita.jpg",
         selected: false,
+        loggedIn: false,
     },
 
 ]

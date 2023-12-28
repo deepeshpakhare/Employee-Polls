@@ -1,14 +1,29 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectUser } from '../../redux/authSlice';
-import { Select } from 'antd';
+import { logInSuccess, selectUser } from '../../redux/authSlice';
+import { Select, Input, Button, Flex } from 'antd';
+
+
+const titleStyle = {
+  fontSize: 30,
+  color: "blue",
+  textDecoration: "underline"
+}
 
 export default function Login() {
   const users = useSelector((state) => state.authDetails);
   const dispatch = useDispatch();
   const [password, setPassword] = useState("");
+  const [selectedUser, setSelectedUser] = useState(users[0]);
+  const avatar = require(`../../avatars/${selectedUser.avatar}`);
 
 
+
+  /**
+   * @description "Creates options for dropdown menu of impersonated employees"
+   * @param {array} users 
+   * @returns {array}
+   */
   const createOptions = (users) => {
     let result = [];
     for (let user of users) {
@@ -23,38 +38,78 @@ export default function Login() {
 
   const handleUserChange = (val) => {
     for (let user of users) {
-      console.log(`${val}, ${user.username}`)
       if (user.username === val) {
+        setSelectedUser(user);
         dispatch(selectUser(user));
         setPassword(user.password);
       }
     }
   }
 
+  const handleLogIn = (e) => {
+    e.preventDefault();
+    let count = 0;
+    for (let user of users) {
+      if (user.selected) {
+          if(user.password === password) {
+            dispatch(logInSuccess(selectedUser));
+          }else {
+            alert("Username and Password did not match");
+          }
+      }else{
+        count++;
+      }
+    }
+    if (count >= users.length) {
+      alert("Please select a user");
+    }
+  }
+
   return (
     <div>
-      <div className='title'>
-        Employee Polls
-      </div>
-      <div className='login-card'>
-        <div className='sign-in'>
-          Log-In
-        </div>
-        <div className='log-in-form'>
-          <div className='username'>
-            <Select
-              defaultValue="Select user to log in"
-              style={{
-                width: 120,
-              }}
-              onChange={handleUserChange}
-              options={createOptions(users)} />
-          </div>
-          <div className='password'>
-            <input type='text' value={password} disabled={true} />
-          </div>
-        </div>
-      </div>
+      <Flex
+        wrap='wrap'
+        gap={10}
+        vertical={true}
+        align="center"
+        justify="center"
+      >
+        <h1 style={titleStyle}>
+          Employee Polls
+        </h1>
+        <h2>
+          Log In
+        </h2>
+        <img
+          src={avatar}
+          alt={selectedUser.avatar}
+          width={200}
+          height={200}
+        />
+        <Select
+          defaultValue="Select user to log in"
+          style={{
+            width: 200,
+          }}
+          onChange={handleUserChange}
+          options={createOptions(users)} />
+        <Input
+          type='password'
+          value={password}
+          style={{ width: 200 }}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder='password'
+        />
+        <Button
+          style={{
+            width: 200,
+          }}
+          type="primary"  
+          onClick={(e)=>handleLogIn(e)}
+        >
+          Log In
+        </Button>
+      </Flex>
     </div>
   )
 }
