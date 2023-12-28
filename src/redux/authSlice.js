@@ -11,7 +11,7 @@ export const authSlice = createSlice(
         initialState,
         reducers: {
             selectUser: (state, action) => {
-                state.authDetails.map((user) => user.id = action.payload.id ? Object.assign(user,{selected:true}): Object.assign(user,{selected:false}))
+                state.authDetails.map((user) => user.id === action.payload.id ? Object.assign(user,{selected:true}): Object.assign(user,{selected:false}));
             }
         }
     }

@@ -5,16 +5,15 @@ import { Select } from 'antd';
 
 export default function Login() {
   const users = useSelector((state) => state.authDetails);
-  console.log(users);
   const dispatch = useDispatch();
   const [password, setPassword] = useState("");
 
 
-  const getOptionsFromUsers = (users) => {
+  const createOptions = (users) => {
     let result = [];
     for (let user of users) {
       result.push({
-        value : user.username,
+        value: user.username,
         label: user.username,
       })
     }
@@ -24,15 +23,12 @@ export default function Login() {
 
   const handleUserChange = (val) => {
     for (let user of users) {
-        //console.log(`${val}, ${user.username}`)
-      if ( user.username === val) {
-         dispatch(selectUser(user));
+      console.log(`${val}, ${user.username}`)
+      if (user.username === val) {
+        dispatch(selectUser(user));
+        setPassword(user.password);
       }
     }
-
-    //todo check slected prop and set password accordingly
-    
-    
   }
 
   return (
@@ -47,14 +43,15 @@ export default function Login() {
         <div className='log-in-form'>
           <div className='username'>
             <Select
+              defaultValue="Select user to log in"
               style={{
                 width: 120,
               }}
               onChange={handleUserChange}
-              options={getOptionsFromUsers(users)}/>
-            </div>
+              options={createOptions(users)} />
+          </div>
           <div className='password'>
-            <input type='text' value={password} disabled />
+            <input type='text' value={password} disabled={true} />
           </div>
         </div>
       </div>
