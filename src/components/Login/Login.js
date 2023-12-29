@@ -60,7 +60,6 @@ export default function Login() {
       if (user.selected) {
           if(user.password === password) {
             dispatch(logInSuccess(selectedUser));
-            navigate("/home");
           }else {
             alert("Username and Password did not match");
           }
@@ -71,7 +70,11 @@ export default function Login() {
     if (count >= users.length) {
       alert("Please select a user");
     }
-
+    for (let user of users) {
+      if (user.loggedIn) {
+         navigate("/home");
+      }
+    }
   }
 
   return (

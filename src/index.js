@@ -13,6 +13,7 @@ import Login from './components/Login/Login';
 import Hoc from './components/hoc/Hoc';
 import Home from './components/home/Home';
 import Leaderboard from './components/leaderbord/Leaderboard';
+import Logout from './components/logout/Logout';
 
 
 const router = createBrowserRouter([
@@ -27,7 +28,11 @@ const router = createBrowserRouter([
   {
     path: "leaderboard",
     element: Hoc(Leaderboard),
-  }
+  },
+  {
+    path: "logout",
+    element: <Logout/>,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
