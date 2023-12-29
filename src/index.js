@@ -5,11 +5,35 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import  store  from './redux/store';
 import { Provider } from 'react-redux';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import Login from './components/Login/Login';
+import Hoc from './components/hoc/Hoc';
+import Home from './components/home/Home';
+import Leaderboard from './components/leaderbord/Leaderboard';
+
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Login/>,
+  },
+  {
+    path: "home",
+    element: Hoc(Home),
+  },
+  {
+    path: "leaderboard",
+    element: Hoc(Leaderboard),
+  }
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <App />
+    <RouterProvider router={router}/>
   </Provider>
 );
 

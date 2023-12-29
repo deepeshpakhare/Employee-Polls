@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { logInSuccess, selectUser } from '../../redux/authSlice';
 import { Select, Input, Button, Flex } from 'antd';
-
+import { useNavigate } from 'react-router-dom';
 
 const titleStyle = {
   fontSize: 30,
@@ -16,11 +16,12 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [selectedUser, setSelectedUser] = useState(users[0]);
   const avatar = require(`../../avatars/${selectedUser.avatar}`);
-
+  const navigate = useNavigate();
 
 
   /**
-   * @description "Creates options for dropdown menu of impersonated employees"
+   * @description "Creates options for dropdown menu of impersonated employees
+   * for logging in"
    * @param {array} users 
    * @returns {array}
    */
@@ -36,6 +37,12 @@ export default function Login() {
     return result;
   }
 
+  /**
+   * @description "It is called whenever the selection of user is changed.
+   * It dispatched the user object with selectUser reducer and sets the
+   * corresponding password of user in the password field"
+   * @param {string} val 
+   */
   const handleUserChange = (val) => {
     for (let user of users) {
       if (user.username === val) {
@@ -53,6 +60,7 @@ export default function Login() {
       if (user.selected) {
           if(user.password === password) {
             dispatch(logInSuccess(selectedUser));
+            navigate("/home");
           }else {
             alert("Username and Password did not match");
           }
@@ -63,6 +71,7 @@ export default function Login() {
     if (count >= users.length) {
       alert("Please select a user");
     }
+
   }
 
   return (
