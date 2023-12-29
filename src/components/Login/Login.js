@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { logInSuccess, selectUser } from '../../redux/authSlice';
+import { getUsers, logInSuccess, selectUser } from '../../redux/authSlice';
 import { Select, Input, Button, Flex } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { getAllUsers } from '../../api/Api';
 
 const titleStyle = {
   fontSize: 30,
@@ -11,11 +12,10 @@ const titleStyle = {
 }
 
 export default function Login() {
-  const users = useSelector((state) => state.authDetails);
+  const users = useSelector((state)=>state.authDetails);
   const dispatch = useDispatch();
   const [password, setPassword] = useState("");
-  const [selectedUser, setSelectedUser] = useState(users[0]);
-  const avatar = require(`../../avatars/${selectedUser.avatar}`);
+  const [selectedUser, setSelectedUser] = useState({avatar:"james.jpg"});
   const navigate = useNavigate();
 
 
@@ -58,12 +58,12 @@ export default function Login() {
     let count = 0;
     for (let user of users) {
       if (user.selected) {
-          if(user.password === password) {
-            dispatch(logInSuccess(selectedUser));
-          }else {
-            alert("Username and Password did not match");
-          }
-      }else{
+        if (user.password === password) {
+          dispatch(logInSuccess(selectedUser));
+        } else {
+          alert("Username and Password did not match");
+        }
+      } else {
         count++;
       }
     }
@@ -72,10 +72,21 @@ export default function Login() {
     }
     for (let user of users) {
       if (user.loggedIn) {
-         navigate("/home");
+        navigate("/home");
       }
     }
   }
+
+  useEffect(() => {
+    let mounted = true;
+    (async() => {
+      if (mounted) {
+        await getAllUsers().then((data) => dispatch(getUsers(data)));
+      }
+    }
+    )();
+    return () => mounted = false;
+  }, [])
 
   return (
     <div>
@@ -93,8 +104,7 @@ export default function Login() {
           Log In
         </h2>
         <img
-          src={avatar}
-          alt={selectedUser.avatar}
+          src={require(`../../avatars/${selectedUser.avatar}`)}
           width={200}
           height={200}
         />
@@ -116,8 +126,8 @@ export default function Login() {
           style={{
             width: 200,
           }}
-          type="primary"  
-          onClick={(e)=>handleLogIn(e)}
+          type="primary"
+          onClick={(e) => handleLogIn(e)}
         >
           Log In
         </Button>

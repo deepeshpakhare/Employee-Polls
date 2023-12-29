@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { users } from "../database/Database";
 
 const initialState = {
-    authDetails: users,
+    authDetails: [],
 }
 
 export const authSlice = createSlice(
@@ -10,6 +9,9 @@ export const authSlice = createSlice(
         name: "authDetails",
         initialState,
         reducers: {
+            getUsers: (state,action) => {
+                state.authDetails.push(...action.payload);
+            },
             selectUser: (state, action) => {
                 state.authDetails.map((user) => user.id === action.payload.id ? Object.assign(user,{selected:true}): Object.assign(user,{selected:false}));
             },
@@ -27,6 +29,6 @@ export const authSlice = createSlice(
     }
 )
 
-export const { selectUser, logInSuccess, logOutSuccess } = authSlice.actions;
+export const { selectUser, logInSuccess, logOutSuccess, getUsers } = authSlice.actions;
 
 export default authSlice.reducer

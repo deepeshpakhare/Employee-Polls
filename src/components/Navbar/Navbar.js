@@ -22,7 +22,6 @@ export default function Navbar() {
     const avatar = user ? require(`../../avatars/${user.avatar}`) : null;
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
     const items = [
         {
             label: (
@@ -91,8 +90,8 @@ export default function Navbar() {
             key: "logout"
         }
     ]
-    
-    
+
+
     const handleLogOut = () => {
         dispatch(logOutSuccess(JSON.parse(localStorage.getItem("activeUser"))));
         navigate("/logout");
