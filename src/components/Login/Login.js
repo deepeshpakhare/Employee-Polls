@@ -18,7 +18,6 @@ export default function Login() {
   const [selectedUser, setSelectedUser] = useState({avatar:"james.jpg"});
   const navigate = useNavigate();
 
-
   /**
    * @description "Creates options for dropdown menu of impersonated employees
    * for logging in"
@@ -53,13 +52,14 @@ export default function Login() {
     }
   }
 
-  const handleLogIn = (e) => {
-    e.preventDefault();
+  
+  const handleLogIn = () => {
     let count = 0;
     for (let user of users) {
       if (user.selected) {
         if (user.password === password) {
           dispatch(logInSuccess(selectedUser));
+          navigate("/home");
         } else {
           alert("Username and Password did not match");
         }
@@ -69,11 +69,6 @@ export default function Login() {
     }
     if (count >= users.length) {
       alert("Please select a user");
-    }
-    for (let user of users) {
-      if (user.loggedIn) {
-        navigate("/home");
-      }
     }
   }
 
@@ -127,7 +122,7 @@ export default function Login() {
             width: 200,
           }}
           type="primary"
-          onClick={(e) => handleLogIn(e)}
+          onClick={(e) => handleLogIn()}
         >
           Log In
         </Button>

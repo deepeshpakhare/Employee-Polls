@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../Navbar/Navbar';
 import { useSelector } from 'react-redux';
 import Login from '../Login/Login';
-import { isLoggedIn } from "../Functions/ReusableFunctions"
+import { isLoggedIn } from "../functions/ReusableFunctions"
 
 export default function Hoc(Component) {
     const InnerComponent = () => {

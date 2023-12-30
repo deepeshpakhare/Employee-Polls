@@ -57,7 +57,7 @@ export default function Navbar() {
                     style={{
                         display: 'flex',
                     }}
-                >   <Link to={"/leaderboard"}>New</Link>
+                >   <Link to={"/addQuestion"}>New</Link>
                 </Space>
             ),
             key: "new"
@@ -78,14 +78,9 @@ export default function Navbar() {
         },
         {
             label: (
-                <Space
-                    direction="vertical"
-                    size="large"
-                    style={{
-                        display: 'flex',
-                    }}
-                >  logout
-                </Space>
+                <div style={usernameStyle}>
+                    Logout
+                </div>
             ),
             key: "logout"
         }

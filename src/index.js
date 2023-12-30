@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import  store  from './redux/store';
 import { Provider } from 'react-redux';
@@ -14,7 +13,7 @@ import Hoc from './components/hoc/Hoc';
 import Home from './components/home/Home';
 import Leaderboard from './components/leaderbord/Leaderboard';
 import Logout from './components/logout/Logout';
-
+import AddQuestion from './components/add-question/AddQuestion';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "leaderboard",
     element: Hoc(Leaderboard),
+  },
+  {
+    path: "addQuestion",
+    element: Hoc(AddQuestion),
   },
   {
     path: "logout",
