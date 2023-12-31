@@ -6,7 +6,7 @@ import { isLoggedIn } from "../functions/ReusableFunctions"
 
 export default function Hoc(Component) {
     const InnerComponent = () => {
-        const users = useSelector((state) => state.authDetails);
+        const users = useSelector((state) => state.auth.authDetails);
         return (
             <div>
                 {isLoggedIn(users)?<div><Navbar/> <Component/></div>:<Login/>}

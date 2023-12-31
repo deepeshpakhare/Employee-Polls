@@ -12,7 +12,7 @@ const titleStyle = {
 }
 
 export default function Login() {
-  const users = useSelector((state)=>state.appData);
+  const users = useSelector((state)=>state.auth.authDetails);
   const dispatch = useDispatch();
   const [password, setPassword] = useState("");
   const [selectedUser, setSelectedUser] = useState({avatar:"james.jpg"});

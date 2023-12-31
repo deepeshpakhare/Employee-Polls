@@ -9,7 +9,6 @@ const store = configureStore(
             app: appDataReducer,
         }
     }       
-    
 );
 
 export default store;
