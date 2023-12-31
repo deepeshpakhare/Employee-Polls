@@ -13,7 +13,7 @@ import Hoc from './components/hoc/Hoc';
 import Home from './components/home/Home';
 import Leaderboard from './components/leaderbord/Leaderboard';
 import Logout from './components/logout/Logout';
-import AddQuestion from './components/add-question/AddQuestion';
+import AddQuestion from './components/question-components/AddQuestion';
 
 const router = createBrowserRouter([
   {

@@ -11,3 +11,8 @@ export const isLoggedIn = (users)=>{
     }
     return false;
 }
+
+
+export const createQuestionObjectForTable = (questionObject) => {
+    return Object.assign({},{})
+}
