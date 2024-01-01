@@ -94,39 +94,43 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <table border={1}>
-        <tbody>
-          <tr>
-            <th align='center' colSpan={getQuestionsAnsweredByTheCurrentUser().length}>
-              Answered
-            </th>
-          </tr>
-          <tr>
-            {getQuestionsAnsweredByTheCurrentUser().map((question) =>
-              <td key={question.id} align='center'>
-                <QuestionCard question={question} />
-              </td>
-            )}
-          </tr>
-        </tbody>
-      </table>
-      <table border={1}>
-        <tbody>
-          <tr>
-            <th align='center' colSpan={getQuestionsNotAnsweredByTheCurrentUser().length}>
-             Un-Answered
-            </th>
-          </tr>
-          <tr>
-            {getQuestionsNotAnsweredByTheCurrentUser().map((question) =>
-              <td key={question.id} align='center'>
-                <QuestionCard question={question} />
-              </td>
-            )}
-          </tr>
-        </tbody>
-      </table>
+    <div style={{ alignContent: "center" }}>
+      <center> <div className='vertical-gap' style={{ height: 10 }}>{ }</div>
+        <table border={1} style={{ width: "70%" }}>
+          <tbody>
+            <tr>
+              <th align='center' colSpan={getQuestionsAnsweredByTheCurrentUser().length}>
+                Answered
+              </th>
+            </tr>
+            <tr>
+              {getQuestionsAnsweredByTheCurrentUser().map((question) =>
+                <td key={question.id} align='center' style={{ padding: 20 }}>
+                  <QuestionCard question={question} />
+                </td>
+              )}
+            </tr>
+          </tbody>
+        </table>
+        <div className='vertical-gap' style={{ height: 50 }}>{ }</div>
+        <table border={1} style={{ width: "70%" }}>
+          <tbody>
+            <tr>
+              <th align='center' colSpan={getQuestionsNotAnsweredByTheCurrentUser().length}>
+                Un-Answered
+              </th>
+            </tr>
+            <tr>
+              {getQuestionsNotAnsweredByTheCurrentUser().map((question) =>
+                <td key={question.id} align='center' style={{ padding: 20 }}>
+                  <QuestionCard question={question} />
+                </td>
+              )}
+            </tr>
+          </tbody>
+        </table>
+      </center>
+
     </div>
   )
 }
