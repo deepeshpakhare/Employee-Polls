@@ -54,26 +54,17 @@ export const questions = [
         text: QUESTION_TEXT,
         firstOption:"Use Redux for state management",
         secondOption:"Use Zustand for state management",
-        answerByJames:{
-            answered:false,
-            answer:"none",
-        },
-        answerByNatali:{
-            answered:false,
-            answer:"none",
-        },
-        answerByPrabhjyot:{
-            answered:true,
-            answer:"firstOption",
-        },
-        answerByLolita:{
-            answered:true,
-            answer:"secondOption",
-        },
-        created:{
-            time:"3:15 PM",
-            date:"12/29/2023",
-        }
+        answeredBy:[
+            {
+                name:"prabhjyot",
+                answer:"firstOption"
+            },
+            {
+                name:"lolita",
+                answer:"secondOption"
+            }
+        ],
+        dateCreated:new Date("December 25, 2023 05:15:00").toString()
     },
     {
         id:nanoid(),
@@ -81,26 +72,21 @@ export const questions = [
         text: QUESTION_TEXT,
         firstOption:"Use Node runtime environment",
         secondOption:"Use Bun runtime environment",
-        answerByJames:{
-            answered:true,
-            answer:"secondOption",
-        },
-        answerByNatali:{
-            answered:false,
-            answer:"none",
-        },
-        answerByPrabhjyot:{
-            answered:true,
-            answer:"firstOption",
-        },
-        answerByLolita:{
-            answered:true,
-            answer:"secondOption",
-        },
-        created:{
-            time:"2:15 PM",
-            date:"12/25/2023",
-        }
+        answeredBy:[
+            {
+                name:"prabhjyot",
+                answer:"firstOption"
+            },
+            {
+                name:"lolita",
+                answer:"secondOption"
+            },
+            {
+                name:"james",
+                answer:"secondOption"
+            },
+        ],
+        dateCreated:new Date("December 20, 2023 09:15:00").toString()
     },
     {
         id:nanoid(),
@@ -108,26 +94,21 @@ export const questions = [
         text: QUESTION_TEXT,
         firstOption:"Use MaterialUI library",
         secondOption:"Use RdixUI library",
-        answerByJames:{
-            answered:false,
-            answer:"none",
-        },
-        answerByNatali:{
-            answered:true,
-            answer:"firstOption",
-        },
-        answerByPrabhjyot:{
-            answered:true,
-            answer:"firstOption",
-        },
-        answerByLolita:{
-            answered:true,
-            answer:"secondOption",
-        },
-        created:{
-            time:"4:15 PM",
-            date:"12/1/2023",
-        }
+        answeredBy:[
+            {
+                name:"natali",
+                answer:"firstOption"
+            },
+            {
+                name:"lolita",
+                answer:"secondOption"
+            },
+            {
+                name:"james",
+                answer:"secondOption"
+            },
+        ],
+        dateCreated:new Date("December 12, 2023 15:15:00").toString()
     },
     {
         id:nanoid(),
@@ -135,25 +116,20 @@ export const questions = [
         text: QUESTION_TEXT,
         firstOption:"Choose monolithic architecture",
         secondOption:"Choose microservices architecture",
-        answerByJames:{
-            answered:false,
-            answer:"none",
-        },
-        answerByNatali:{
-            answered:false,
-            answer:"none",
-        },
-        answerByPrabhjyot:{
-            answered:true,
-            answer:"firstOption",
-        },
-        answerByLolita:{
-            answered:true,
-            answer:"secondOption",
-        },
-        created:{
-            time:"9:15 AM",
-            date:"12/5/2023",
-        }
+        answeredBy:[
+            {
+                name:"mohammed",
+                answer:"firstOption"
+            },
+            {
+                name:"lolita",
+                answer:"secondOption"
+            },
+            {
+                name:"natali",
+                answer:"secondOption"
+            },
+        ],
+        dateCreated:new Date("December 31, 2023 08:15:00").toString()
     }
 ]
