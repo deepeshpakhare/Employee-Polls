@@ -14,6 +14,8 @@ import Home from './components/home/Home';
 import Leaderboard from './components/leaderbord/Leaderboard';
 import Logout from './components/logout/Logout';
 import AddQuestion from './components/question-components/AddQuestion';
+import Question from './components/question-components/Question';
+
 
 const router = createBrowserRouter([
   {
@@ -31,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: "addQuestion",
     element: Hoc(AddQuestion),
+  },
+  {
+    path: "question/:question_id",
+    element: Hoc(Question),
   },
   {
     path: "logout",

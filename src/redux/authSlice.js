@@ -10,6 +10,7 @@ export const authSlice = createSlice(
         initialState,
         reducers: {
             getUsers: (state,action) => {
+                state.authDetails = [];
                 state.authDetails.push(...action.payload);
             },
             selectUser: (state, action) => {

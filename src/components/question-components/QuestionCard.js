@@ -1,11 +1,13 @@
 import React from 'react';
 import { Card,Button } from 'antd';
+import { Link } from 'react-router-dom';
 
-export default function QuestionCard({ askedBy, createdAt}) {
+export default function QuestionCard({ question }) {
     return (
         <div>
-            <Card title={askedBy} bordered={false}>
-                <p>{createdAt}</p>
+            <Card title={question.askedBy}>
+                <p>{question.dateCreated}</p>
+                <p><Link to={`/question/${question.id}`}>Show</Link></p>
             </Card>
         </div>
     )

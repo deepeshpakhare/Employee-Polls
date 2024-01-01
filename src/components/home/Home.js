@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getAllQuestions } from '../../api/Api';
 import { useSelector, useDispatch } from 'react-redux';
 import { setQuestions } from '../../redux/appDataSlice';
@@ -40,7 +40,7 @@ export default function Home() {
    * @returns "An array containing questions sorted as per date created, answered by the logged in user"
    */
   const getQuestionsAnsweredByTheCurrentUser = () => {
-    const user =  getCurrentUser(users);
+    const user = getCurrentUser(users);
     let result = [];
     for (let question of allQuestions) {
       for (let answeredUser of question.answeredBy) {
@@ -64,16 +64,27 @@ export default function Home() {
     return result;
   }
 
-  const getQuestionsNotAnsweredByTheCurrentUser = (user, allQuestions) => {
+  const getQuestionsNotAnsweredByTheCurrentUser = () => {
+    const user = getCurrentUser(users);
     let result = [];
-    const temp = allQuestions.map((question) => question.answeredBy.filter(
-      (obj) => obj.name !== user.username).length > 0 ? question : null);
-    result = temp.filter((question) => question !== null);
+    for (let question of allQuestions) {
+      let count = 0;
+      for (let answeredUser of question.answeredBy) {
+        console.log(user.username);
+        if (answeredUser.name !== user.username) {
+          count++;
+        }
+      }
+      if (count === question.answeredBy.length) {
+        result.push(question);
+      }
+    }
+    console.log(result);
     if (result.length > 0) {
       result.sort((a, b) => {
-        if (a.dateCreated < b.dateCreated) {
+        if (new Date(a.dateCreated) < new Date(b.dateCreated)) {
           return 1;
-        } else if (a.dateCreated < b.dateCreated) {
+        } else if (new Date(a.dateCreated) > new Date(b.dateCreated)) {
           return -1;
         }
         return 0;
@@ -84,26 +95,38 @@ export default function Home() {
 
   return (
     <div>
-      {allQuestions &&
-        <table style={{ textAlign: "center" }}>
-          <tbody>
-            <tr>
-              <th>
-                Answered
-              </th>
-            </tr>
-
-            <tr>
-              {getQuestionsAnsweredByTheCurrentUser().map((question) =>
-                <td>
-                  <QuestionCard key={question.id} askedBy={question.askedBy} createdAt={question.dateCreated} />
-                </td>
-              )}
-            </tr>
-          </tbody>
-
-        </table>
-      }
+      <table border={1}>
+        <tbody>
+          <tr>
+            <th align='center' colSpan={getQuestionsAnsweredByTheCurrentUser().length}>
+              Answered
+            </th>
+          </tr>
+          <tr>
+            {getQuestionsAnsweredByTheCurrentUser().map((question) =>
+              <td key={question.id} align='center'>
+                <QuestionCard question={question} />
+              </td>
+            )}
+          </tr>
+        </tbody>
+      </table>
+      <table border={1}>
+        <tbody>
+          <tr>
+            <th align='center' colSpan={getQuestionsNotAnsweredByTheCurrentUser().length}>
+             Un-Answered
+            </th>
+          </tr>
+          <tr>
+            {getQuestionsNotAnsweredByTheCurrentUser().map((question) =>
+              <td key={question.id} align='center'>
+                <QuestionCard question={question} />
+              </td>
+            )}
+          </tr>
+        </tbody>
+      </table>
     </div>
   )
 }
