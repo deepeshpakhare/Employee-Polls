@@ -11,16 +11,10 @@ export const authSlice = createSlice(
         reducers: {
             getUsers: (state,action) => {
                 state.authDetails = [];
-                state.authDetails.push(...action.payload);
-            },
-            selectUser: (state, action) => {
-                state.authDetails.map((user) => user.id === action.payload.id ? Object.assign(user,{selected:true}): Object.assign(user,{selected:false}));
+                state.authDetails.push(action.payload);
             },
             logInSuccess: (state, action) => {
-                state.authDetails.map((user) => user.username === action.payload.username &&
-                user.password === action.payload.password ? Object.assign(user,{loggedIn:true}): Object.assign(user,{loggedIn:false}));
-                const activeUser = state.authDetails.filter((user) => user.loggedIn)[0];
-                localStorage.setItem("activeUser",JSON.stringify(activeUser));
+                localStorage.setItem("activeUser",JSON.stringify(action.payload));
             },
             logOutSuccess: (state, action) => {
                 localStorage.removeItem("activeUser");

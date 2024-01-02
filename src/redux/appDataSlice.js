@@ -9,11 +9,11 @@ export const appDataSlice = createSlice(
         name:"appData",
         initialState,
         reducers:{
-            setQuestions:(state, action) => {
+            setQuestions: (state, action) => {
                 state.appData = [];
-                state.appData.push(...action.payload);
+                state.appData.push(action.payload);
             },
-            addNewQuestion:(state, action) => {
+            addNewQuestion: (state, action) => {
                 state.appData.push(action.payload);
             },
         }

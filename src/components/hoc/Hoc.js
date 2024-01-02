@@ -12,13 +12,13 @@ export default function Hoc(Component) {
         if (question_id) {
             return (
                 <div>
-                    {isLoggedIn(users) ? <div><Navbar /> <Component question_id={question_id} /></div> : <Login />}
+                    {isLoggedIn() ? <div><Navbar /> <Component question_id={question_id} /></div> : <Login />}
                 </div>
             )
         }
         return (
             <div>
-                {isLoggedIn(users) ? <div><Navbar /> <Component /></div> : <Login />}
+                {isLoggedIn() ? <div><Navbar /> <Component /></div> : <Login />}
             </div>
         )
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card,Button } from 'antd';
+import { Card } from 'antd';
 import { Link } from 'react-router-dom';
 
 export default function QuestionCard({ question }) {

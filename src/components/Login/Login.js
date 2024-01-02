@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getUsers, logInSuccess, selectUser } from '../../redux/authSlice';
 import { Select, Input, Button, Flex } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { getAllUsers } from '../../api/Api';
+import { _getUsers } from '../../database/Database';
 
 const titleStyle = {
   fontSize: 30,
@@ -15,7 +15,7 @@ export default function Login() {
   const users = useSelector((state)=>state.auth.authDetails);
   const dispatch = useDispatch();
   const [password, setPassword] = useState("");
-  const [selectedUser, setSelectedUser] = useState({avatar:"james.jpg"});
+  const [selectedUser, setSelectedUser] = useState({avatarURL:"james.jpg"});
   const navigate = useNavigate();
 
   /**
@@ -26,10 +26,11 @@ export default function Login() {
    */
   const createOptions = (users) => {
     let result = [];
-    for (let user of users) {
+    const usersObj = users[0];
+    for (const key in usersObj) {
       result.push({
-        value: user.username,
-        label: user.username,
+        value: usersObj[key].name,
+        label:  usersObj[key].name,
       })
     }
     console.log(result);
@@ -43,40 +44,32 @@ export default function Login() {
    * @param {string} val 
    */
   const handleUserChange = (val) => {
-    for (let user of users) {
-      if (user.username === val) {
-        setSelectedUser(user);
-        dispatch(selectUser(user));
-        setPassword(user.password);
+    const usersObj = users[0];
+    for (const key in usersObj) {
+      if (usersObj[key].name === val) {
+        setSelectedUser(usersObj[key]);
+        setPassword(usersObj[key].password);
       }
     }
   }
 
-  
+  console.log(selectedUser);
   const handleLogIn = () => {
-    let count = 0;
-    for (let user of users) {
-      if (user.selected) {
-        if (user.password === password) {
+    
+        if (selectedUser.password === password) {
           dispatch(logInSuccess(selectedUser));
+          alert("yes")
           navigate("/home");
         } else {
           alert("Username and Password did not match");
         }
-      } else {
-        count++;
-      }
-    }
-    if (count >= users.length) {
-      alert("Please select a user");
-    }
   }
 
   useEffect(() => {
     let mounted = true;
     (async() => {
       if (mounted) {
-        await getAllUsers().then((data) => dispatch(getUsers(data)));
+        await _getUsers().then((data) => dispatch(getUsers(data)));
       }
     }
     )();
@@ -99,7 +92,7 @@ export default function Login() {
           Log In
         </h2>
         <img
-          src={require(`../../avatars/${selectedUser.avatar}`)}
+          src={require(`../../avatars/${selectedUser.avatarURL}`)}
           width={200}
           height={200}
         />
@@ -111,7 +104,7 @@ export default function Login() {
           onChange={handleUserChange}
           options={createOptions(users)} />
         <Input
-          type='password'
+          type='text'
           value={password}
           style={{ width: 200 }}
           onChange={(e) => setPassword(e.target.value)}
