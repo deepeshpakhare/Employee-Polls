@@ -16,7 +16,7 @@ export default function Login() {
   const users = useSelector((state)=>state.auth.authDetails);
   const dispatch = useDispatch();
   const [password, setPassword] = useState("");
-  const [selectedUser, setSelectedUser] = useState({avatarURL:"james.jpg"});
+  const [selectedUser, setSelectedUser] = useState({avatarURL:"sarahedo.jpg"});
   const navigate = useNavigate();
 
   /**

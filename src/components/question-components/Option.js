@@ -18,6 +18,7 @@ export default function Option({ id, text, user, answered, votes, totalVotes, op
             </div>
         )
     }
+    
     return (
         <div>
             <Card title={text}>

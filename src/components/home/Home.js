@@ -41,7 +41,6 @@ export default function Home() {
         }
       }
     }
-    //console.log(result);
     if (result.length > 0) {
       result.sort(dateSortingFunction)
     }
