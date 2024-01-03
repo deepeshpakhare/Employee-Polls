@@ -72,7 +72,7 @@ export default function Navbar() {
                         height={30}
                         style={imageStyle}
                     />
-                    <h3 style={usernameStyle}>{user && user.username}</h3></div>
+                    <h3 style={usernameStyle}>{user && user.name}</h3></div>
             ),
             key: "user"
         },

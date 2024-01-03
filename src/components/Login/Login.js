@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getUsers, logInSuccess, selectUser } from '../../redux/authSlice';
 import { Select, Input, Button, Flex } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { _getUsers } from '../../database/Database';
+import { _getQuestions, _getUsers } from '../../database/Database';
+import { setQuestions } from '../../redux/appDataSlice';
 
 const titleStyle = {
   fontSize: 30,

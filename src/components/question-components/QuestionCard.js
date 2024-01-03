@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export default function QuestionCard({ question }) {
     const displayTimeString = () => {
-       const time = new Date(question.dateCreated);
+       const time = new Date(question.timestamp);
        const hours = time.getHours();
        const minutes = time.getMinutes();
        if ( hours > 12) {
@@ -15,10 +15,11 @@ export default function QuestionCard({ question }) {
             return `${hours}:${minutes} AM`;
        }
     }
+    
     return (
         <div>
-            <Card title={question.askedBy} style={{border:"1px solid black"}}>
-                <p>{`${new Date(question.dateCreated).getMonth()}/${new Date(question.dateCreated).getDate()}/${new Date(question.dateCreated).getFullYear()}`}</p>
+            <Card title={question.author} style={{border:"1px solid black"}}>
+                <p>{`${new Date(question.timestamp).getMonth()}/${new Date(question.timestamp).getDate()}/${new Date(question.timestamp).getFullYear()}`}</p>
                 <p>{displayTimeString()}</p>
                 <p><Link to={`/question/${question.id}`}>Show</Link></p>
             </Card>

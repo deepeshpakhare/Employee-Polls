@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom';
 
 export default function Hoc(Component) {
     const InnerComponent = () => {
-        const users = useSelector((state) => state.auth.authDetails);
         const { question_id } = useParams();
         if (question_id) {
             return (
@@ -15,12 +14,14 @@ export default function Hoc(Component) {
                     {isLoggedIn() ? <div><Navbar /> <Component question_id={question_id} /></div> : <Login />}
                 </div>
             )
+        } else {
+            return (
+                <div>
+                    {isLoggedIn() ? <div><Navbar /> <Component /></div> : <Login />}
+                </div>
+            )
         }
-        return (
-            <div>
-                {isLoggedIn() ? <div><Navbar /> <Component /></div> : <Login />}
-            </div>
-        )
+
     }
     return <InnerComponent />;
 }

@@ -10,17 +10,11 @@ export const isLoggedIn = ()=>{
     return false;
 }
 
-
-/**
-* 
-* @param {Array} users 
-* @returns "The user who is logged in else Error"
-*/
-export const getCurrentUser = (users) => {
- for (let user of users) {
-   if (user.loggedIn) {
-     return user;
-   }
- }
- return Error("Error in logged in user");
+export const dateSortingFunction = (a, b) => {
+  if (new Date(a.timestamp) < new Date(b.timestamp)) {
+    return 1;
+  } else if (new Date(a.timestamp) > new Date(b.timestamp)) {
+    return -1;
+  }
+  return 0;
 }

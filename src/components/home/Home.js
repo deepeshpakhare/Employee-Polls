@@ -1,133 +1,120 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setQuestions } from '../../redux/appDataSlice';
 import QuestionCard from '../question-components/QuestionCard';
-import { getCurrentUser } from '../functions/ReusableFunctions';
 import { _getQuestions } from '../../database/Database';
+import { dateSortingFunction } from '../functions/ReusableFunctions';
+import { setQuestions } from '../../redux/appDataSlice';
 
 export default function Home() {
   const allQuestionsArray = useSelector((state) => state.app.appData);
-  const users = useSelector((state) => state.auth.authDetails);
   const dispatch = useDispatch();
-  console.log(allQuestions);
-  useEffect(() => {
-    let mounted = true;
-    (async () => {
-      if (mounted) {
-        await _getQuestions().then((data) => dispatch(setQuestions(data)));
-      }
-    })();
-    return () => mounted = false;
-  }, [])
 
-  
+  const getAnsweredQustions = () => {
+    const user = JSON.parse(localStorage.getItem("activeUser"));
+    const userKeysArray = Object.keys(user);
+    const questionsAnsweredByUser = [];
+    for (const key of userKeysArray) {
+      if (key === "answers") {
+        for (const answer in user[key]) {
+          questionsAnsweredByUser.push(answer);
+        }
+      }
+    }
+    return questionsAnsweredByUser;
+  }
+
   /**
    * 
    * @param {Object} user 
    * @param {Array} allQuestions 
    * @returns "An array containing questions sorted as per date created, answered by the logged in user"
    */
-  const getQuestionsAnsweredByTheCurrentUser = () => {
-    const user = localStorage.getItem("activeUser");
-    const questionsAnsweredByUser = [];
-    for (const key in user) {
-       if (key === "answers") {
-           for (const answer in key) {
-                questionsAnsweredByUser.push(answer);
-           }
-       }
-    }
+  const questionsAnsweredByTheCurrentUser = () => {
+    const answeredQuestions = getAnsweredQustions();
     const allQuestionsObj = allQuestionsArray[0];
+    console.log(allQuestionsArray);
     let result = [];
     for (const key in allQuestionsObj) {
-      for (let answeredUser of question.answeredBy) {
-        console.log(user.username);
-        if (answeredUser.name === user.username) {
-          result.push(question)
+      for (const answer of answeredQuestions) {
+        if (key === answer) {
+          result.push(allQuestionsObj[key]);
         }
       }
     }
     //console.log(result);
     if (result.length > 0) {
-      result.sort((a, b) => {
-        if (new Date(a.dateCreated) < new Date(b.dateCreated)) {
-          return 1;
-        } else if (new Date(a.dateCreated) > new Date(b.dateCreated)) {
-          return -1;
-        }
-        return 0;
-      })
+      result.sort(dateSortingFunction)
     }
     return result;
   }
 
-  const getQuestionsNotAnsweredByTheCurrentUser = () => {
-    const user = getCurrentUser(users);
+  const questionsNotAnsweredByTheCurrentUser = () => {
     let result = [];
-    for (let question of allQuestions) {
-      let count = 0;
-      for (let answeredUser of question.answeredBy) {
-        console.log(user.username);
-        if (answeredUser.name !== user.username) {
-          count++;
+    const allQuestionsObj = allQuestionsArray[0];
+    const answeredQuestions = getAnsweredQustions();
+    for (const answer of answeredQuestions) {
+      for (const key in allQuestionsObj) {
+        if (answer !== key) {
+           if (!result.includes(allQuestionsObj[key])) {
+              result.push(allQuestionsObj[key]);
+           }
         }
-      }
-      if (count === question.answeredBy.length) {
-        result.push(question);
       }
     }
-    console.log(result);
     if (result.length > 0) {
-      result.sort((a, b) => {
-        if (new Date(a.dateCreated) < new Date(b.dateCreated)) {
-          return 1;
-        } else if (new Date(a.dateCreated) > new Date(b.dateCreated)) {
-          return -1;
-        }
-        return 0;
-      })
+      result.sort(dateSortingFunction)
     }
     return result;
   }
+
+  useEffect(() => {
+    let mounted = true;
+    (async() => {
+      if (mounted) {
+        await _getQuestions().then((data) => dispatch(setQuestions(data)));
+      }
+    }
+    )();
+    return () => mounted = false;
+  }, [])
 
   return (
     <div style={{ alignContent: "center" }}>
       <center> <div className='vertical-gap' style={{ height: 10 }}>{ }</div>
-        <table border={1} style={{ width: "70%" }}>
+        {questionsAnsweredByTheCurrentUser() && <table border={1} style={{ width: "70%" }}>
           <tbody>
             <tr>
-              <th align='center' colSpan={getQuestionsAnsweredByTheCurrentUser().length}>
+              <th align='center' colSpan={questionsAnsweredByTheCurrentUser().length}>
                 Answered
               </th>
             </tr>
             <tr>
-              {getQuestionsAnsweredByTheCurrentUser().map((question) =>
+              {questionsAnsweredByTheCurrentUser().map((question) =>
                 <td key={question.id} align='center' style={{ padding: 20 }}>
                   <QuestionCard question={question} />
                 </td>
               )}
             </tr>
           </tbody>
-        </table>
-        <div className='vertical-gap' style={{ height: 50 }}>{ }</div>
-        <table border={1} style={{ width: "70%" }}>
+        </table>}
+       <div className='vertical-gap' style={{ height: 50 }}>{ }</div>
+       {questionsNotAnsweredByTheCurrentUser() && <table border={1} style={{ width: "70%" }}>
           <tbody>
             <tr>
-              <th align='center' colSpan={getQuestionsNotAnsweredByTheCurrentUser().length}>
+              <th align='center' colSpan={questionsNotAnsweredByTheCurrentUser().length}>
                 Un-Answered
               </th>
             </tr>
             <tr>
-              {getQuestionsNotAnsweredByTheCurrentUser().map((question) =>
+              {questionsNotAnsweredByTheCurrentUser().map((question) =>
                 <td key={question.id} align='center' style={{ padding: 20 }}>
                   <QuestionCard question={question} />
                 </td>
               )}
             </tr>
           </tbody>
-        </table>
+        </table>}
       </center>
-
     </div>
   )
 }
