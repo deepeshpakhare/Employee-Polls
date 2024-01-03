@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUsers, logInSuccess, selectUser } from '../../redux/authSlice';
+import {  logInSuccess, setUsers } from '../../redux/authSlice';
 import { Select, Input, Button, Flex } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { _getQuestions, _getUsers } from '../../database/Database';
@@ -70,7 +70,7 @@ export default function Login() {
     let mounted = true;
     (async() => {
       if (mounted) {
-        await _getUsers().then((data) => dispatch(getUsers(data)));
+        await _getUsers().then((data) => dispatch(setUsers(data)));
       }
     }
     )();

@@ -8,6 +8,7 @@ const tdStyle = {
 
 export default function Question({ question_id }) {
   const allQuestions = useSelector((state) => state.app.appData);
+  const user = JSON.parse(localStorage.getItem("activeUser"));
 
   const question = () => {
     const allQuestionsObj = allQuestions[0];
@@ -21,14 +22,15 @@ export default function Question({ question_id }) {
   }
 
   const answered = () => {
-    const answersOfUser = Object.keys(question().answers);
+    const answersOfUser = Object.keys(user.answers);
+    console.log(answersOfUser);
+    console.log(question_id);
     if(answersOfUser.includes(question_id)){
       return true;
     }
     return false;
   }
 
-  const user = JSON.parse(localStorage.getItem("activeUser"));
   const votesFirstOption =  question().optionOne.votes.length;
   const votesSecondOption = question().optionTwo.votes.length;
 
@@ -44,10 +46,10 @@ export default function Question({ question_id }) {
             </tr>
             <tr>
               <td align='center' style={{tdStyle}}>
-                {<Option id={question().id} user={user}  optionName={"firstOption"} text={question().optionOne.text} answered={answered} votes={votesFirstOption} totalVotes={votesFirstOption + votesSecondOption}/>}
+                {<Option id={question().id} user={user}  optionName={"optionOne"} text={question().optionOne.text} answered={answered()} votes={votesFirstOption} totalVotes={votesFirstOption + votesSecondOption}/>}
               </td>
               <td align='center' style={{tdStyle}}>
-                {<Option id={question().id} user={user}  optionName={"secondOption"} text={question().optionTwo.text} answered={answered} votes={votesSecondOption} totalVotes={votesFirstOption + votesSecondOption}/>}
+                {<Option id={question().id} user={user}  optionName={"optionTwo"} text={question().optionTwo.text} answered={answered()} votes={votesSecondOption} totalVotes={votesFirstOption + votesSecondOption}/>}
               </td>
             </tr>
           </tbody>

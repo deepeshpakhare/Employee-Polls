@@ -1,11 +1,15 @@
 import React from 'react';
 import { Card, Button } from 'antd';
+import { _saveQuestionAnswer } from '../../database/Database';
 
 export default function Option({ id, text, user, answered, votes, totalVotes, optionName }) {
     
-    const handleOptionClick = (e) => {
+    const handleOptionClick = async(e) => {
         e.preventDefault();
-        console.log(`${id} ${user.username} ${optionName}`);
+        //const userId = user.id;
+        console.log(optionName);
+        await _saveQuestionAnswer({ authedUser:user.id, qid:id, answer:optionName }).then((res)=>console.log(res))
+        .catch((error)=> console.log(error));
     }
    
     if (answered) {
