@@ -63,7 +63,7 @@ export default function Option({ id, text, user, answered, votes, totalVotes, op
             <div>
                 <Card title={text}>
                     <p>Votes:{answered ? votes:getVotes()}</p>
-                    <p>Percentage:{answered ?(votes / totalVotes * 100).toFixed(2): getTotalVotes()}%</p>
+                    <p>Percentage:{answered ?(votes / totalVotes * 100).toFixed(2):(getVotes()/getTotalVotes() * 100).toFixed(2)}%</p>
                     {optionClicked ? <p>You voted for this option</p> : <p><div style={{ height: 20 }}></div></p>}
                 </Card>
             </div>
