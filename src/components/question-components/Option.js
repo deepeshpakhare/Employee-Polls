@@ -45,7 +45,6 @@ export default function Option({ id, text, user, answered, votes, totalVotes, op
                 }
             }
         }
-        console.log("returned false");
         return false;
     } 
 
@@ -64,6 +63,10 @@ export default function Option({ id, text, user, answered, votes, totalVotes, op
         return votes;
     }
 
+    /**
+     * @description "Calculates total votes"
+     * @returns {number}
+     */
     const getTotalVotes = () => {
         const questions = Object.keys(allQestionsObj);
         let votes = 0;
@@ -79,7 +82,7 @@ export default function Option({ id, text, user, answered, votes, totalVotes, op
     if (answered || answeredNow()) {
         return (
             <div>
-                <Card title={text}>
+                <Card title={text} style={alreadyVoted()?{border:"2px solid green"}:{color:"2px solid black"}}>
                     <p>Votes:{answered ? votes:getVotes()}</p>
                     <p>Percentage:{answered ?(votes / totalVotes * 100).toFixed(2):(getVotes()/getTotalVotes() * 100).toFixed(2)}%</p>
                     {alreadyVoted() ? <p>You voted for this option</p> : <p style={{ height: 20 }}></p>}
