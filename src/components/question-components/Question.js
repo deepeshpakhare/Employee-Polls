@@ -57,6 +57,8 @@ export default function Question({ question_id }) {
       <div style={{ height: 20 }}></div>
       <center>
         <img src={require(`../../avatars/${question().author}.jpg`)} width={200} height={200}></img>
+        <div>{question().author}</div>
+        <h2>Would you rather</h2>
         <table>
           <tbody>
             <tr>
