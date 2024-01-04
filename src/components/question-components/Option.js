@@ -12,6 +12,7 @@ export default function Option({ id, text, user, answered, votes, totalVotes, op
     const dispatch = useDispatch();
 
     const handleOptionClick = async (e) => {
+        e.currentTarget.disabled = true;
         console.log(optionName);
         await _saveQuestionAnswer({ authedUser: user.id, qid: id, answer: optionName }).then((res) => console.log(res))
             .catch((error) => console.log(error));
