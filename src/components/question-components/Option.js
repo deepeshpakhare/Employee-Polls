@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Card, Button } from 'antd';
 import { _getQuestions, _getUsers, _saveQuestionAnswer } from '../../database/Database';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,7 +7,6 @@ import { getAnsweredQustions } from '../functions/ReusableFunctions';
 import { setQuestions } from '../../redux/appDataSlice';
 
 export default function Option({ id, text, user, answered, votes, totalVotes, optionName }) {
-    const [optionClicked, setOptionClicked] = useState(false);
     const users= useSelector((state) => state.auth.authDetails[0]);
     const allQestionsObj = useSelector((state) => state.app.appData[0]);
     const dispatch = useDispatch();
@@ -18,7 +17,6 @@ export default function Option({ id, text, user, answered, votes, totalVotes, op
             .catch((error) => console.log(error));
         await _getUsers().then((data) => dispatch(setUsers(data)));
         await _getQuestions().then((data) => dispatch(setQuestions(data)));
-        setOptionClicked(true);
     }
 
     const answeredNow = () => {
@@ -30,6 +28,26 @@ export default function Option({ id, text, user, answered, votes, totalVotes, op
         }
         return false;
     }
+
+    const alreadyVoted = () => {
+        const questions = Object.keys(allQestionsObj);
+        for (const questionId of questions) {
+            if (questionId === id) {
+                if (allQestionsObj[questionId].optionOne.votes.includes(user.id)) {
+                    if(optionName === "optionOne") {
+                        return true;
+                    }
+                }
+                if(allQestionsObj[questionId].optionTwo.votes.includes(user.id)) {
+                    if(optionName === "optionTwo") {
+                        return true;
+                    }
+                }
+            }
+        }
+        console.log("returned false");
+        return false;
+    } 
 
     const getVotes = () => {
         const questions = Object.keys(allQestionsObj);
@@ -64,7 +82,7 @@ export default function Option({ id, text, user, answered, votes, totalVotes, op
                 <Card title={text}>
                     <p>Votes:{answered ? votes:getVotes()}</p>
                     <p>Percentage:{answered ?(votes / totalVotes * 100).toFixed(2):(getVotes()/getTotalVotes() * 100).toFixed(2)}%</p>
-                    {optionClicked ? <p>You voted for this option</p> : <p><div style={{ height: 20 }}></div></p>}
+                    {alreadyVoted() ? <p>You voted for this option</p> : <p style={{ height: 20 }}></p>}
                 </Card>
             </div>
         ) 
