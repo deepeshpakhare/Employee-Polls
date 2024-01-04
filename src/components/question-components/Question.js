@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Option from './Option';
 
@@ -46,10 +46,10 @@ export default function Question({ question_id }) {
             </tr>
             <tr>
               <td align='center' style={{tdStyle}}>
-                {<Option id={question().id} user={user}  optionName={"optionOne"} text={question().optionOne.text} answered={answered()} votes={votesFirstOption} totalVotes={votesFirstOption + votesSecondOption}/>}
+                {<Option id={question().id} user={user}  answered={answered()} optionName={"optionOne"} text={question().optionOne.text}  votes={votesFirstOption} totalVotes={votesFirstOption + votesSecondOption}/>}
               </td>
               <td align='center' style={{tdStyle}}>
-                {<Option id={question().id} user={user}  optionName={"optionTwo"} text={question().optionTwo.text} answered={answered()} votes={votesSecondOption} totalVotes={votesFirstOption + votesSecondOption}/>}
+                {<Option id={question().id} user={user}  answered={answered()} optionName={"optionTwo"} text={question().optionTwo.text}  votes={votesSecondOption} totalVotes={votesFirstOption + votesSecondOption}/>}
               </td>
             </tr>
           </tbody>

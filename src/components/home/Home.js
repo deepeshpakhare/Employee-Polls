@@ -5,44 +5,22 @@ import { _getQuestions, _getUsers } from '../../database/Database';
 import { dateSortingFunction } from '../functions/ReusableFunctions';
 import { setQuestions } from '../../redux/appDataSlice';
 import { setUsers } from '../../redux/authSlice';
+import { getAnsweredQustions } from '../functions/ReusableFunctions';
 
 export default function Home() {
   const allQuestionsArray = useSelector((state) => state.app.appData);
-  const usersArray = useSelector((state) => state.auth.authDetails);
+  const users = useSelector((state) => state.auth.authDetails[0]);
   const dispatch = useDispatch();
-
-  console.log(usersArray);
-  const getAnsweredQustions = () => {
-    const user = JSON.parse(localStorage.getItem("activeUser"));
-    const users = usersArray[0];
-    let updatedUser = {};
-    for (const key in users) {
-      if (key === user.id) {
-        updatedUser = users[key];
-      }
-    }
-    console.log(updatedUser);
-    const userKeysArray = Object.keys(updatedUser);
-    const questionsAnsweredByUser = [];
-    for (const key of userKeysArray) {
-      if (key === "answers") {
-        for (const answer in updatedUser[key]) {
-          questionsAnsweredByUser.push(answer);
-        }
-      }
-    }
-    console.log(questionsAnsweredByUser);
-    return questionsAnsweredByUser;
-  }
 
   /**
    * 
-   * @param {Object} user 
-   * @param {Array} allQuestions 
-   * @returns "An array containing questions sorted as per date created, answered by the logged in user"
+   * 
+   * @description "The function returns an array of question objects
+   * that have been answered by the logged in user"
+   * @returns {array} 
    */
   const questionsAnsweredByTheCurrentUser = () => {
-    const answeredQuestions = getAnsweredQustions();
+    const answeredQuestions = getAnsweredQustions(users);
     const allQuestionsObj = allQuestionsArray[0];
     console.log(allQuestionsArray);
     let result = [];
@@ -59,10 +37,15 @@ export default function Home() {
     return result;
   }
 
+  /**
+   * @description "The function returns an array of question objects
+   * that have not been answered by the logged in user"
+   * @returns {array}
+   */
   const questionsNotAnsweredByTheCurrentUser = () => {
     let result = [];
     const allQuestionsObj = allQuestionsArray[0];
-    const answeredQuestions = getAnsweredQustions();
+    const answeredQuestions = getAnsweredQustions(users);
     console.log(answeredQuestions);
     for (const key in allQuestionsObj) {
       let count = 0;
@@ -86,7 +69,6 @@ export default function Home() {
     let mounted = true;
     (async () => {
       if (mounted) {
-        alert("mounted, usEffect called")
         await _getQuestions().then((data) => dispatch(setQuestions(data)));
         await _getUsers().then((data) => dispatch(setUsers(data)));
       }
