@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { Menu, Space, } from 'antd';
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
@@ -16,7 +16,7 @@ const usernameStyle = {
 }
 
 
-export default function Navbar() {
+function Navbar() {
     const [current, setCurrent] = useState('home');
     const user = JSON.parse(localStorage.getItem("activeUser"));
     const avatar = user ? require(`../../avatars/${user.avatarURL}`) : null;
@@ -105,3 +105,5 @@ export default function Navbar() {
         </div>
     )
 }
+
+export default memo(Navbar);
