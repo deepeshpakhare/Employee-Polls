@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import QuestionCard from '../question-components/QuestionCard';
 import { _getQuestions, _getUsers } from '../../database/Database';
-import { dateSortingFunction } from '../functions/ReusableFunctions';
+import { dateSortingFunction } from '../Functions/ReusableFunctions';
 import { setQuestions } from '../../redux/appDataSlice';
 import { setUsers } from '../../redux/authSlice';
-import { getAnsweredQustions } from '../functions/ReusableFunctions';
+import { getAnsweredQustions } from '../Functions/ReusableFunctions';
 
 export default function Home() {
   const allQuestionsArray = useSelector((state) => state.app.appData);

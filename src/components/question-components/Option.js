@@ -3,7 +3,7 @@ import { Card, Button } from 'antd';
 import { _getQuestions, _getUsers, _saveQuestionAnswer } from '../../database/Database';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUsers } from '../../redux/authSlice';
-import { getAnsweredQustions } from '../functions/ReusableFunctions';
+import { getAnsweredQustions } from '../Functions/ReusableFunctions';
 import { setQuestions } from '../../redux/appDataSlice';
 
 export default function Option({ id, text, user, answered, votes, totalVotes, optionName }) {
