@@ -21,7 +21,6 @@ export default function AddQuestion() {
       }else{
         alert(submitted);
       }
-      
     } else {
       alert("Option one or option two can not be empty");
       e.currentTarget.disabled = false;
