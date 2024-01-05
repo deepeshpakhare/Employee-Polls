@@ -1,15 +1,32 @@
 import React, { useRef } from 'react';
 import { Button } from 'antd';
 import { _saveQuestion } from '../../database/Database';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddQuestion() {
   const optionOneRef = useRef(null);
   const optionTwoRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async(e) => {
     e.currentTarget.disabled = true;
     const author = JSON.parse(localStorage.getItem("activeUser")).id;
-    await _saveQuestion({ author: author,  })
+    const optionOne = optionOneRef.current.value;
+    const optionTwo = optionTwoRef.current.value;
+    if ( optionOne !== "" && optionTwo !== "") {
+      const submitted = await _saveQuestion({ author: author, optionOneText: optionOne, optionTwoText: optionTwo })
+      .then((res)=> res).catch((error)=> error);
+      if(submitted) {
+        navigate("/home",{replace:true})
+      }else{
+        alert(submitted);
+      }
+      
+    } else {
+      alert("Option one or option two can not be empty");
+      e.currentTarget.disabled = false;
+    }
+    
   }
   return (
     <div>
