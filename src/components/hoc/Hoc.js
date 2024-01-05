@@ -1,8 +1,7 @@
 import React from 'react';
 import Navbar from '../Navbar/Navbar';
-import { useSelector } from 'react-redux';
 import Login from '../Login/Login';
-import { isLoggedIn } from "../functions/ReusableFunctions"
+import { isLoggedIn } from "../Functions/ReusableFunctions"
 import { useParams } from 'react-router-dom';
 
 export default function Hoc(Component) {
