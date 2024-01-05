@@ -33,6 +33,17 @@ export default function Leaderboard() {
       result.push(tempObj);
       tempObj = {};
     }
+    result.sort((a,b) => {
+      const totalOfA = a.answered + a.created;
+      const totalOfB = b.answered + b.created;
+      if (totalOfA < totalOfB ) {
+        return 1;
+      } else if (totalOfA > totalOfB) {
+        return -1;
+      } else {
+        return 0;
+      }
+    })
     return result;
   }
 

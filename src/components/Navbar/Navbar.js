@@ -17,7 +17,7 @@ const usernameStyle = {
 
 
 function Navbar() {
-    const [current, setCurrent] = useState('home');
+    const [current, setCurrent] = useState('');
     const user = JSON.parse(localStorage.getItem("activeUser"));
     const avatar = user ? require(`../../avatars/${user.avatarURL}`) : null;
     const navigate = useNavigate();
