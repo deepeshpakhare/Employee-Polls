@@ -105,7 +105,7 @@ export default function Login() {
           onChange={handleUserChange}
           options={createOptions(users)} />
         <Input
-          type='text'
+          type='password'
           value={password}
           style={{ width: 200 }}
           onChange={(e) => setPassword(e.target.value)}
