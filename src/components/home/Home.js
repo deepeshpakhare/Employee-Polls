@@ -89,7 +89,7 @@ export default function Home() {
             </tr>
             <tr>
               {questionsAnsweredByTheCurrentUser().map((question) =>
-                <td key={question.id} align='center' style={{ padding: 20 }}>
+                <td key={question.id} align='center' style={{ padding: 20}}>
                   <QuestionCard question={question} />
                 </td>
               )}

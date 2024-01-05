@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Option from './Option';
-import { setQuestions } from '../../redux/appDataSlice';
 import { _getQuestions } from '../../database/Database';
 
 const tdStyle = {

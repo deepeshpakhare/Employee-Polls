@@ -18,7 +18,7 @@ export default function QuestionCard({ question }) {
     
     return (
         <div>
-            <Card title={question.author} style={{border:"1px solid black"}}>
+            <Card title={question.author} style={{border:"1px solid black", width:170 }}>
                 <p>{`${new Date(question.timestamp).getMonth()}/${new Date(question.timestamp).getDate()}/${new Date(question.timestamp).getFullYear()}`}</p>
                 <p>{displayTimeString()}</p>
                 <p><Link to={`/question/${question.id}`}>Show</Link></p>
