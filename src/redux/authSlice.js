@@ -18,7 +18,6 @@ export const authSlice = createSlice(
             },
             logOutSuccess: (state, action) => {
                 localStorage.removeItem("activeUser");
-                Object.assign(state.authDetails.filter((user) => user.loggedIn && user.selected)[0],{selected:false},{loggedIn:false});
             }
         }    
     }

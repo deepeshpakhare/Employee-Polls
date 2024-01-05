@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Option from './Option';
 import { _getQuestions } from '../../database/Database';
+import { setQuestions } from '../../redux/appDataSlice';
 
 const tdStyle = {
   padding: "10px"
@@ -37,7 +38,9 @@ export default function Question({ question_id }) {
 
   const votesFirstOption = () => {
     try {
-      return question().optionOne.votes.length;
+      if (allQuestions) {
+        return question().optionOne.votes.length;
+      }
     } catch (err) {
 
     }
@@ -45,36 +48,48 @@ export default function Question({ question_id }) {
 
   const votesSecondOption = () => {
     try {
-      return question().optionTwo.votes.length;
+      if (allQuestions) {
+        return question().optionTwo.votes.length;
+      }
     } catch (err) {
 
     }
   }
 
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      if (mounted) {
+        await _getQuestions().then((data) => dispatch(setQuestions(data)));
+      }
+    }
+    )();
+    return () => mounted = false;
+  }, [])
+
   return (
     <div>
       <div style={{ height: 20 }}></div>
       <center>
-        <img src={require(`../../avatars/${question().author}.jpg`)} width={200} height={200}></img>
-        <div>{question().author}</div>
+        <img src={require(`../../avatars/${allQuestions && question().author}.jpg`)} width={200} height={200}></img>
+        <div>{allQuestions && question().author}</div>
         <h2>Would you rather</h2>
         <table>
           <tbody>
             <tr>
-              <th align='center' colSpan={2} style={{ tdStyle }}>{question().text}</th>
+              <th align='center' colSpan={2} style={{ tdStyle }}>{allQuestions && question().text}</th>
             </tr>
             <tr>
               <td align='center' style={{ tdStyle }}>
-                {<Option id={question().id} user={user} answered={answered()} optionName={"optionOne"} text={question().optionOne.text} votes={votesFirstOption()} totalVotes={votesFirstOption() + votesSecondOption()} />}
+                {<Option id={allQuestions && question().id} user={user} answered={answered()} optionName={"optionOne"} text={allQuestions && question().optionOne.text} votes={votesFirstOption()} totalVotes={votesFirstOption() + votesSecondOption()} />}
               </td>
               <td align='center' style={{ tdStyle }}>
-                {<Option id={question().id} user={user} answered={answered()} optionName={"optionTwo"} text={question().optionTwo.text} votes={votesSecondOption()} totalVotes={votesFirstOption() + votesSecondOption()} />}
+                {<Option id={allQuestions && question().id} user={user} answered={answered()} optionName={"optionTwo"} text={allQuestions && question().optionTwo.text} votes={votesSecondOption()} totalVotes={votesFirstOption() + votesSecondOption()} />}
               </td>
             </tr>
           </tbody>
         </table>
       </center>
-
     </div>
   )
 }
