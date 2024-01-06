@@ -17,6 +17,7 @@ export default function Login() {
   const dispatch = useDispatch();
   const [password, setPassword] = useState("");
   const [selectedUser, setSelectedUser] = useState({avatarURL:"sarahedo.jpg"});
+  const [showPasswordField, setShowPasswordField] = useState(false);
   const navigate = useNavigate();
 
   /**
@@ -45,6 +46,7 @@ export default function Login() {
    * @param {string} val 
    */
   const handleUserChange = (val) => {
+    setShowPasswordField(true);
     const usersObj = users[0];
     for (const key in usersObj) {
       if (usersObj[key].name === val) {
@@ -104,13 +106,13 @@ export default function Login() {
           }}
           onChange={handleUserChange}
           options={createOptions(users)} />
-        <Input
+        {showPasswordField && <Input
           type='password'
           value={password}
           style={{ width: 200 }}
           onChange={(e) => setPassword(e.target.value)}
           placeholder='password'
-        />
+        />}
         <Button
           style={{
             width: 200,
