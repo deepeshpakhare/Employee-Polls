@@ -15,7 +15,7 @@ import Leaderboard from './components/leaderbord/Leaderboard';
 import Logout from './components/logout/Logout';
 import AddQuestion from './components/question-components/AddQuestion';
 import Question from './components/question-components/Question';
-
+import Error from './components/error/Error';
 
 const router = createBrowserRouter([
   {
@@ -25,18 +25,22 @@ const router = createBrowserRouter([
   {
     path: "home",
     element: Hoc(Home),
+    errorElement: <Error/>
   },
   {
     path: "leaderboard",
     element: Hoc(Leaderboard),
+    errorElement: <Error/>
   },
   {
     path: "addQuestion",
     element: Hoc(AddQuestion),
+    errorElement: <Error/>
   },
   {
     path: "question/:question_id",
     element: Hoc(Question),
+    errorElement: <Error/>
   },
   {
     path: "logout",
