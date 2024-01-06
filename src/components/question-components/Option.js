@@ -23,7 +23,6 @@ export default function Option({ id, text, user, answered, votes, totalVotes, op
     const answeredNow = () => {
         const answeredQuetions = getAnsweredQustions(users);
         const found = answeredQuetions.find((questionId) => questionId === id);
-        console.log(found);
         if (found) {
             return true;
         }
