@@ -4,7 +4,7 @@ import {  logInSuccess, setUsers } from '../../redux/authSlice';
 import { Select, Input, Button, Flex } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { _getQuestions, _getUsers } from '../../database/Database';
-import { setQuestions } from '../../redux/appDataSlice';
+
 
 const titleStyle = {
   fontSize: 30,
@@ -61,7 +61,6 @@ export default function Login() {
     
         if (selectedUser.password === password) {
           dispatch(logInSuccess(selectedUser));
-          //alert("yes")
           navigate("/home");
         } else {
           alert("Username and Password did not match");

@@ -33,7 +33,7 @@ const router = createBrowserRouter([
     errorElement: <Error/>
   },
   {
-    path: "addQuestion",
+    path: "add",
     element: Hoc(AddQuestion),
     errorElement: <Error/>
   },
