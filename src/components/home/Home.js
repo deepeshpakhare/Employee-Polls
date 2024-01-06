@@ -21,6 +21,7 @@ export default function Home() {
    */
   const questionsAnsweredByTheCurrentUser = () => {
     const answeredQuestions = getAnsweredQustions(users);
+    console.log(answeredQuestions);
     const allQuestionsObj = allQuestionsArray[0];
     console.log(allQuestionsArray);
     let result = [];

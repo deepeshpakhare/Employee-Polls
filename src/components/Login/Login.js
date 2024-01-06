@@ -59,7 +59,7 @@ export default function Login() {
     
         if (selectedUser.password === password) {
           dispatch(logInSuccess(selectedUser));
-          alert("yes")
+          //alert("yes")
           navigate("/home");
         } else {
           alert("Username and Password did not match");

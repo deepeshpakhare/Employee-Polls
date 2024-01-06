@@ -1,4 +1,4 @@
-let users = {
+export let users = {
   sarahedo: {
     id: 'sarahedo',
     password:'password123',
