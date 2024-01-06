@@ -57,7 +57,7 @@ function Navbar() {
                     style={{
                         display: 'flex',
                     }}
-                >   <Link to={"/addQuestion"}>New</Link>
+                >   <Link to={"/add"}>New</Link>
                 </Space>
             ),
             key: "new"
