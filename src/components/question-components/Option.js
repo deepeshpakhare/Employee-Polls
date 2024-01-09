@@ -83,9 +83,9 @@ export default function Option({ id, text, user, answered, votes, totalVotes, op
         return (
             <div>
                 <Card title={text} style={alreadyVoted()?{border:"2px solid green"}:{color:"2px solid black"}}>
-                    <p><h4>Votes:{answered ? votes:getVotes()}</h4></p>
-                    <p><h4>Percentage:{answered ?(votes / totalVotes * 100).toFixed(2):(getVotes()/getTotalVotes() * 100).toFixed(2)}%</h4></p>
-                    {alreadyVoted() ? <p><h4>You voted for this option</h4></p> : <p style={{ height: 20 }}></p>}
+                    <h4>Votes:{answered ? votes:getVotes()}</h4>
+                    <h4>Percentage:{answered ?(votes / totalVotes * 100).toFixed(2):(getVotes()/getTotalVotes() * 100).toFixed(2)}%</h4>
+                    {alreadyVoted() ? <h4>You voted for this option</h4> : <p style={{ height: 20 }}></p>}
                 </Card>
             </div>
         ) 
