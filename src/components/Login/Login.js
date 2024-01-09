@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {  logInSuccess, setUsers } from '../../redux/authSlice';
+import { logInSuccess, setUsers } from '../../redux/authSlice';
 import { Select, Input, Button, Flex } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { _getQuestions, _getUsers } from '../../database/Database';
@@ -13,10 +13,10 @@ const titleStyle = {
 }
 
 export default function Login() {
-  const users = useSelector((state)=>state.auth.authDetails);
+  const users = useSelector((state) => state.auth.authDetails);
   const dispatch = useDispatch();
   const [password, setPassword] = useState("");
-  const [selectedUser, setSelectedUser] = useState({avatarURL:"employee-collage.jpg"});
+  const [selectedUser, setSelectedUser] = useState({ avatarURL: "employee-collage.jpg" });
   const [showPasswordField, setShowPasswordField] = useState(false);
   const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ export default function Login() {
     for (const key in usersObj) {
       result.push({
         value: usersObj[key].name,
-        label:  usersObj[key].name,
+        label: usersObj[key].name,
       })
     }
     console.log(result);
@@ -58,18 +58,31 @@ export default function Login() {
 
   console.log(selectedUser);
   const handleLogIn = () => {
-    
-        if (selectedUser.password === password) {
+    if (selectedUser.password === password) {
+      const locationToRedirect = localStorage.getItem("location");
+      const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+      console.log(activeUser);
+      if (activeUser) {
+        if (locationToRedirect !== "/home" && activeUser.id === selectedUser.id) {
+          dispatch(logInSuccess(selectedUser));
+          navigate(locationToRedirect);
+        } else {
           dispatch(logInSuccess(selectedUser));
           navigate("/home");
-        } else {
-          alert("Username and Password did not match");
         }
+      } else {
+        dispatch(logInSuccess(selectedUser));
+        navigate("/home");
+      }
+
+    } else {
+      alert("Username and Password did not match");
+    }
   }
 
   useEffect(() => {
     let mounted = true;
-    (async() => {
+    (async () => {
       if (mounted) {
         await _getUsers().then((data) => dispatch(setUsers(data)));
       }

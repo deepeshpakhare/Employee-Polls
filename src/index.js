@@ -25,22 +25,22 @@ const router = createBrowserRouter([
   {
     path: "home",
     element: Hoc(Home),
-    errorElement: <Error/>
+    errorElement: <Login/>
   },
   {
     path: "leaderboard",
     element: Hoc(Leaderboard),
-    errorElement: <Error/>
+    errorElement: <Login/>
   },
   {
     path: "add",
     element: Hoc(AddQuestion),
-    errorElement: <Error/>
+    errorElement: <Login/>
   },
   {
     path: "question/:question_id",
     element: Hoc(Question),
-    errorElement: <Error/>
+    errorElement: <Login/>
   },
   {
     path: "logout",
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-console.log = () => {};
+//console.log = () => {};
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>

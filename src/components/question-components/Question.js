@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Option from './Option';
 import { _getQuestions } from '../../database/Database';
 import { setQuestions } from '../../redux/appDataSlice';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const tdStyle = {
   padding: "10px"
@@ -12,10 +13,15 @@ export default function Question({ question_id }) {
   const allQuestions = useSelector((state) => state.app.appData);
   const user = JSON.parse(localStorage.getItem("activeUser"));
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const question = () => {
     const allQuestionsObj = allQuestions[0];
-    const allQuestionsObjKeys = Object.keys(allQuestionsObj);
+    let allQuestionsObjKeys = [];
+    if (allQuestionsObj) {
+      allQuestionsObjKeys = Object.keys(allQuestionsObj);
+    }
     console.log(allQuestionsObjKeys);
     for (const key of allQuestionsObjKeys) {
       if (key === question_id) {
@@ -23,7 +29,7 @@ export default function Question({ question_id }) {
         return allQuestionsObj[key];
       }
     }
-    throw "Question not found";
+    return null;
   }
 
   const answered = () => {
@@ -57,6 +63,13 @@ export default function Question({ question_id }) {
   }
 
   useEffect(() => {
+    if (location.key !== localStorage.getItem("locationKey")) {
+      localStorage.setItem("locationKey", location.key);
+    } else {
+      localStorage.setItem("location", location.pathname);
+      navigate("/");
+      return;
+    }
     let mounted = true;
     (async () => {
       if (mounted) {
@@ -71,20 +84,20 @@ export default function Question({ question_id }) {
     <div>
       <div style={{ height: 20 }}></div>
       <center>
-        <img src={require(`../../avatars/${allQuestions && question().author}.jpg`)} width={200} height={200}></img>
-        <div>{allQuestions && question().author}</div>
+        {question() && <img src={require(`../../avatars/${ question().author}.jpg`)} width={200} height={200}></img>}
+        {question() && <div>{question().author}</div>}
         <h2>Would you rather</h2>
         <table>
           <tbody>
             <tr>
-              <th align='center' colSpan={2} style={{ tdStyle }}>{allQuestions && question().text}</th>
+              {question() && <th align='center' colSpan={2} style={{ tdStyle }}>{question().text}</th>}
             </tr>
             <tr>
               <td align='center' style={{ tdStyle }}>
-                {<Option id={allQuestions && question().id} user={user} answered={answered()} optionName={"optionOne"} text={allQuestions && question().optionOne.text} votes={votesFirstOption()} totalVotes={votesFirstOption() + votesSecondOption()} />}
+                {question() && <Option id={question().id} user={user} answered={answered()} optionName={"optionOne"} text={question().optionOne.text} votes={votesFirstOption()} totalVotes={votesFirstOption() + votesSecondOption()} />}
               </td>
               <td align='center' style={{ tdStyle }}>
-                {<Option id={allQuestions && question().id} user={user} answered={answered()} optionName={"optionTwo"} text={allQuestions && question().optionTwo.text} votes={votesSecondOption()} totalVotes={votesFirstOption() + votesSecondOption()} />}
+                {question() && <Option id={question().id} user={user} answered={answered()} optionName={"optionTwo"} text={question().optionTwo.text} votes={votesSecondOption()} totalVotes={votesFirstOption() + votesSecondOption()} />}
               </td>
             </tr>
           </tbody>

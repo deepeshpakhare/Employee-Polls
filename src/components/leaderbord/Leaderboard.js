@@ -2,13 +2,16 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Table } from 'antd';
 import { _getQuestions, _getUsers } from '../../database/Database';
-import { setUsers } from '../../redux/authSlice';
+import { logOutSuccess, setUsers } from '../../redux/authSlice';
 import { setQuestions } from '../../redux/appDataSlice';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function Leaderboard() {
   const users = useSelector((state) => state.auth.authDetails[0]);
   const questions = useSelector((state) => state.app.appData[0]);
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const dataSource = () => {
     const result = [];
@@ -72,6 +75,13 @@ export default function Leaderboard() {
   ];
 
   useEffect(() => {
+    if(location.key !== localStorage.getItem("locationKey")) {
+      localStorage.setItem("locationKey",location.key);
+    } else {
+      localStorage.setItem("location",location.pathname);
+      navigate("/");
+      return;
+    }
     let mounted = true;
     (async () => {
       if (mounted) {
