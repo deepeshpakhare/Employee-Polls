@@ -26,6 +26,10 @@ You can access the application by hitting the URL: https://employee-polls-rose.v
 
 In the project directory, you can run:
 
+### `npm install`
+
+You can run this command in the project's root directory to download the dependencies of the project to run the cloned project on your local machine.
+
 ### `npm start`
 
 Runs the app in the development mode.\
