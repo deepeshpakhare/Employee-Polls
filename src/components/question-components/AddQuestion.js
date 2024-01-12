@@ -2,12 +2,15 @@ import React, { useEffect, useRef } from 'react';
 import { Button } from 'antd';
 import { _saveQuestion } from '../../database/Database';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logOutSuccess } from '../../redux/authSlice';
 
 export default function AddQuestion() {
   const optionOneRef = useRef(null);
   const optionTwoRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.currentTarget.disabled = true;
@@ -31,12 +34,16 @@ export default function AddQuestion() {
 
   useEffect((
     () => {
-      if (location.key !== localStorage.getItem("locationKey")) {
+      /*if (location.key !== localStorage.getItem("locationKey")) {
         localStorage.setItem("locationKey", location.key);
       } else {
         localStorage.setItem("location", location.pathname);
         navigate("/");
         return;
+      }*/
+      if (!location.state) {
+        localStorage.setItem("path",window.location.pathname);
+        dispatch(logOutSuccess());
       }
     }
   ), [])

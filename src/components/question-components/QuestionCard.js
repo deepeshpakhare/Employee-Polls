@@ -1,8 +1,10 @@
 import React from 'react';
 import { Card } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function QuestionCard({ question }) {
+    const location = useLocation();
+
     const displayTimeString = () => {
        const time = new Date(question.timestamp);
        const hours = time.getHours();
@@ -21,7 +23,7 @@ export default function QuestionCard({ question }) {
             <Card title={question.author} style={{border:"1px solid black", width:170 }}>
                 <p>{`${new Date(question.timestamp).getMonth()+1}/${new Date(question.timestamp).getDate()}/${new Date(question.timestamp).getFullYear()}`}</p>
                 <p>{displayTimeString()}</p>
-                <p><Link to={`/question/${question.id}`}>Show</Link></p>
+                <p><Link to={`/question/${question.id}`} state={{from:location.pathname}}>Show</Link></p>
             </Card>
         </div>
     )

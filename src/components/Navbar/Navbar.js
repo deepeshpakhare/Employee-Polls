@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react';
 import { Menu, Space, } from 'antd';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { logOutSuccess } from '../../redux/authSlice';
 
@@ -20,8 +20,10 @@ function Navbar() {
     const [current, setCurrent] = useState('');
     const user = JSON.parse(localStorage.getItem("activeUser"));
     const avatar = user ? require(`../../avatars/${user.avatarURL}`) : null;
+    const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
     const items = [
         {
             label: (
@@ -31,7 +33,7 @@ function Navbar() {
                     style={{
                         display: 'flex',
                     }}
-                > <Link to={"/home"}>Home</Link>
+                > <Link to={"/home"} state={{from:location.pathname}}>Home</Link>
                 </Space>
             ),
             key: "home"
@@ -44,7 +46,7 @@ function Navbar() {
                     style={{
                         display: 'flex',
                     }}
-                >   <Link to={"/leaderboard"}>Leaderboard</Link>
+                >   <Link to={"/leaderboard"} state={{from:location.pathname}}>Leaderboard</Link>
                 </Space>
             ),
             key: "leaderboard"
@@ -57,7 +59,7 @@ function Navbar() {
                     style={{
                         display: 'flex',
                     }}
-                >   <Link to={"/add"}>New</Link>
+                >   <Link to={"/add"} state={{from:location.pathname}}>New</Link>
                 </Space>
             ),
             key: "new"
@@ -89,6 +91,7 @@ function Navbar() {
 
     const handleLogOut = () => {
         dispatch(logOutSuccess(JSON.parse(localStorage.getItem("activeUser"))));
+        localStorage.clear();
         navigate("/logout");
     }
 

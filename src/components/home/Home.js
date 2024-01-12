@@ -18,6 +18,8 @@ export default function Home() {
   const [answersArray, setAnswersArray] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
+  const state = useLocation().state;
+  console.log(state);
   /**
    * 
    * 
@@ -91,12 +93,16 @@ export default function Home() {
 
   useEffect(() => {
     console.log(location);
-    if(location.key !== localStorage.getItem("locationKey")) {
+    /*if(location.key !== localStorage.getItem("locationKey")) {
       localStorage.setItem("locationKey",location.key);
     } else {
       dispatch(logOutSuccess());
       navigate("/");
       return;
+    }*/
+    if (!location.state && !state && !localStorage.getItem("path")) {
+      localStorage.setItem("path",window.location.pathname);
+      dispatch(logOutSuccess());
     }
     let mounted = true;
     (async () => {

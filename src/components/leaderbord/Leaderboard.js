@@ -75,13 +75,18 @@ export default function Leaderboard() {
   ];
 
   useEffect(() => {
-    if(location.key !== localStorage.getItem("locationKey")) {
+    console.log(location.state);
+    if (!location.state) {
+      localStorage.setItem("path",window.location.pathname);
+      dispatch(logOutSuccess());
+    }
+    /*if(location.key !== localStorage.getItem("locationKey")) {
       localStorage.setItem("locationKey",location.key);
     } else {
       localStorage.setItem("location",location.pathname);
       navigate("/");
       return;
-    }
+    }*/
     let mounted = true;
     (async () => {
       if (mounted) {

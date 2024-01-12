@@ -4,6 +4,7 @@ import Option from './Option';
 import { _getQuestions } from '../../database/Database';
 import { setQuestions } from '../../redux/appDataSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { logOutSuccess } from '../../redux/authSlice';
 
 const tdStyle = {
   padding: "10px"
@@ -15,6 +16,7 @@ export default function Question({ question_id }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  console.log(location.state);
 
   const question = () => {
     const allQuestionsObj = allQuestions[0];
@@ -63,13 +65,20 @@ export default function Question({ question_id }) {
   }
 
   useEffect(() => {
-    if (location.key !== localStorage.getItem("locationKey")) {
+    /*if (location.key !== localStorage.getItem("locationKey")) {
       localStorage.setItem("locationKey", location.key);
     } else {
       localStorage.setItem("location", location.pathname);
-      navigate("/");
+      //navigate("/");
       return;
-    }
+    }*/
+    console.log(location.state)
+    if (!location.state) {
+      localStorage.setItem("path",window.location.pathname);
+      dispatch(logOutSuccess());
+      return;
+    } 
+
     let mounted = true;
     (async () => {
       if (mounted) {

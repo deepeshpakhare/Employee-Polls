@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { logInSuccess, setUsers } from '../../redux/authSlice';
 import { Select, Input, Button, Flex } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { _getQuestions, _getUsers } from '../../database/Database';
 
 
@@ -19,6 +19,7 @@ export default function Login() {
   const [selectedUser, setSelectedUser] = useState({ avatarURL: "employee-collage.jpg" });
   const [showPasswordField, setShowPasswordField] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   /**
    * @description "Creates options for dropdown menu of impersonated employees
@@ -59,12 +60,13 @@ export default function Login() {
   console.log(selectedUser);
   const handleLogIn = () => {
     if (selectedUser.password === password) {
-      const locationToRedirect = localStorage.getItem("location");
+      /*const locationToRedirect = localStorage.getItem("location");
       const activeUser = JSON.parse(localStorage.getItem("activeUser"));
       console.log(activeUser);
       if (activeUser) {
         if (locationToRedirect !== "/home" && activeUser.id === selectedUser.id) {
           dispatch(logInSuccess(selectedUser));
+          localStorage.setItem("redirectedFrom","/login");
           navigate(locationToRedirect);
         } else {
           dispatch(logInSuccess(selectedUser));
@@ -74,12 +76,20 @@ export default function Login() {
         dispatch(logInSuccess(selectedUser));
         navigate("/home");
       }
-
+      */
+     const path = localStorage.getItem("path");
+      if (path) {
+        dispatch(logInSuccess(selectedUser));
+        navigate(path, {state:{from:location.pathname}});
+        localStorage.removeItem("path");
+      } else {
+        dispatch(logInSuccess(selectedUser));
+        navigate("/home", {state:{from:location.pathname}});
+      }
     } else {
       alert("Username and Password did not match");
     }
   }
-
   useEffect(() => {
     let mounted = true;
     (async () => {
