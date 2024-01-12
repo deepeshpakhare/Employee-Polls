@@ -14,6 +14,7 @@ export default function Hoc(Component) {
         const { question_id } = useParams();
         const questionsObj = useSelector((state) => state.app.appData[0]);
         const dispatch = useDispatch();
+        console.log("I am rendered");
         console.log(questionsObj);
 
         const isQuestionIdValid = () => {
@@ -24,6 +25,7 @@ export default function Hoc(Component) {
                         return true;
                     }
                 }
+                return false;
             }
             return false;
         }
@@ -36,32 +38,44 @@ export default function Hoc(Component) {
                 }
             }
             )();
+
             return () => mounted = false;
         }, [])
 
         if (!question_id) {
             return (
-                <div>
-                    {isLoggedIn() ? <div><Navbar /> <Component /></div> : <Login />}
-                </div>
-            )
-        }
+                <>
+                    <div>
+                        {isLoggedIn() ? <div><Navbar /> <Component /></div> : <Login />}
+                    </div>
+                </>
 
-        if (question_id) {
-            if (isQuestionIdValid()) {
-                return (
-                    <div>
-                        {isLoggedIn() ? <div><Navbar /> <Component question_id={question_id} /></div> : <Login />}
-                    </div>
-                )
-            } else {
-                return(
-                    <div>
-                        {isLoggedIn() ? <Error/>:<Login/>}
-                    </div>
-                )
+            )
+        } else {
+            if (questionsObj !== "undefined") {
+                if (isQuestionIdValid()) {
+                    return (
+                        <>
+                            <div>
+                                {isLoggedIn() ? <div><Navbar /> <Component question_id={question_id} /></div> : <Login />}
+                            </div>
+                        </>
+
+                    )
+
+                } else {
+                    //alert("Entered");
+                    return (
+                        <>
+                            <div>
+                                {isLoggedIn() ? <Error /> : <Login />}
+                            </div>
+                        </>
+
+                    )
+                }
             }
-        } 
+        }
     }
-    return <InnerComponent />;
+    return <div><InnerComponent /></div>;
 }

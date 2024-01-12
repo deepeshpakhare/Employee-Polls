@@ -74,9 +74,9 @@ export default function Question({ question_id }) {
     }*/
     console.log(location.state)
     if (!location.state) {
-      localStorage.setItem("path",window.location.pathname);
+      alert("Entered");
+      localStorage.setItem("path",location.pathname);
       dispatch(logOutSuccess());
-      return;
     } 
 
     let mounted = true;
