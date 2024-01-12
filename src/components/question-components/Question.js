@@ -74,7 +74,6 @@ export default function Question({ question_id }) {
     }*/
     console.log(location.state)
     if (!location.state) {
-      alert("Entered");
       localStorage.setItem("path",location.pathname);
       dispatch(logOutSuccess());
     } 
